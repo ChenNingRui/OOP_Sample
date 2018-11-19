@@ -71,13 +71,17 @@ public class GameLayer implements Layer, PlayerMoveEvent, CreateBulletEvent {
 	}
 	
 	private void removeBullet(Sprite bullet) {
-		bulletList.remove(bullet);
-		renderList.remove(bullet);
+		if(bulletList.indexOf(bullet) != -1) {
+			bulletList.remove(bullet);
+			renderList.remove(bullet);
+		}
 	}
 	
 	private void removeEnemy(Sprite enemy) {
-		enemyList.remove(enemy);
-		renderList.remove(enemy);
+		if(enemyList.indexOf(enemy) != -1) {
+			enemyList.remove(enemy);
+			renderList.remove(enemy);
+		}
 	}
 	
 	private void rotateImage(Sprite sprite) {
@@ -191,12 +195,12 @@ public class GameLayer implements Layer, PlayerMoveEvent, CreateBulletEvent {
 		}
 		
 		//bullet
-		for(int i = 0, length = bulletList.size(); i < length; i++) {
+		for(int i = 0; i < bulletList.size(); i++) {
 			MoveSprite bullet = bulletList.get(i);
 			spriteMoveToPoint(bullet, bullet.getX(), bullet.getY() - bullet.getVelocity());
 		}
 		
-		for(int i = 0, length = bulletList.size(); i < length; i++) {
+		for(int i = 0; i < bulletList.size(); i++) {
 			MoveSprite bullet = bulletList.get(i);
 				if(bullet.getY() < 10) {
 					removeBullet(bullet);
@@ -204,21 +208,21 @@ public class GameLayer implements Layer, PlayerMoveEvent, CreateBulletEvent {
 		}
 		
 		//enemy
-		for(int i = 0, length = enemyList.size(); i < length; i++) {
+		for(int i = 0; i < enemyList.size(); i++) {
 			MoveSprite enemy = enemyList.get(i);
 			spriteMoveToPoint(enemy, enemy.getX(), enemy.getY() + enemy.getVelocity());
 		}
 		
-		for(int i = 0, length = enemyList.size(); i < length; i++) {
+		for(int i = 0; i < enemyList.size(); i++) {
 			MoveSprite enemy = enemyList.get(i);
 			if(enemy.getY() > layerheight) {
 				removeEnemy(enemy);
 			}
 		}
 		
-		for(int i = 0, length = enemyList.size(); i < length; i++) {
+		for(int i = 0; i < enemyList.size(); i++) {
 			Enemy enemy = enemyList.get(i);
-			for(int j = 0, size = bulletList.size(); j < size; j++) {
+			for(int j = 0; j < bulletList.size(); j++) {
 				Bullet bullet = bulletList.get(j);
 				collisionCheckForBulletAndEnemy(enemy, bullet);
 			}
